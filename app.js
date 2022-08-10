@@ -9,7 +9,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 const indexRouter = require('./routes');
 const userRouter = require('./routes/user');
-const pageRouter = require('./routes/page');
+//const pageRouter = require('./routes/page');
 
 const app = express();
 app.set('port', process.env.PORT || 8001);
@@ -18,6 +18,10 @@ nunjucks.configure('views', {
   express: app,
   watch: true,
 });
+
+//app.get('/', (req, res) => {
+//  res.send('Hello jisoo');
+//});
 
 app.use(morgan('dev')); 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -34,7 +38,9 @@ app.use(session({
   },
 }));
 
-app.use('/', pageRouter);
+app.use('/', indexRouter);
+app.use('/user', userRouter);
+//app.use('/', pageRouter);
 
 app.use((req, res, next) => {
   const error = new Error(`${req.method}${req.url} 라우터가 없습니다.`);
