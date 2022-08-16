@@ -9,9 +9,7 @@ const PetsitterType = require('./petsitter_type');
 const Type = require('./type');
 const Review = require('./review');
 const ReviewImage = require('./review_image');
-const ReviewStatus = require('./review_status');
 const Booking = require('./booking');
-const BookingStatus = require('./booking_status')
 
 const db = {}
 const sequelize = new Sequelize(
@@ -27,9 +25,7 @@ db.PetsitterType = PetsitterType;
 db.Type = Type;
 db.Review = Review;
 db.ReviewImage = ReviewImage;
-db.ReviewStatus = ReviewStatus;
 db.Booking = Booking;
-db.BookingStatus = BookingStatus;
 
 User.init(sequelize);
 Petsitter.init(sequelize);
@@ -39,9 +35,7 @@ PetsitterType.init(sequelize);
 Type.init(sequelize);
 Review.init(sequelize);
 ReviewImage.init(sequelize);
-ReviewStatus.init(sequelize);
 Booking.init(sequelize);
-BookingStatus.init(sequelize);
 
 User.associate(db);
 Petsitter.associate(db);
@@ -51,8 +45,6 @@ PetsitterType.associate(db);
 Type.associate(db);
 Review.associate(db);
 ReviewImage.associate(db);
-ReviewStatus.associate(db);
 Booking.associate(db);
-BookingStatus.associate(db);
 
 module.exports = db;

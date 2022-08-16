@@ -15,6 +15,9 @@ module.exports = class Petsitter extends Sequelize.Model {
         type: Sequelize.STRING(40),
         allowNull: false,
       },
+      count: {
+        type: Sequelize.INTEGER(30),
+      },
       information: {
         type: Sequelize.STRING(2000),
         allowNull: true,

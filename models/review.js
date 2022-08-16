@@ -15,6 +15,10 @@ module.exports = class Review extends Sequelize.Model {
         type: Sequelize.INTEGER(30),
         allowNull: false,
       },
+      status: {
+        type: Sequelize.STRING(40),
+        allowNull: true,
+      }
     }, {
       sequelize,
       timestamps: true,

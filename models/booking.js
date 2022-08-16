@@ -3,10 +3,6 @@ const Sequelize = require('sequelize');
 module.exports = class Booking extends Sequelize.Model {
   static init(sequelize) {
     return super.init({
-      booking_code: {
-        type: Sequelize.INTEGER(40),
-        allowNull: false,
-      },
       check_in: {
         type: Sequelize.DATE(),
         allowNull: false,
@@ -14,6 +10,9 @@ module.exports = class Booking extends Sequelize.Model {
       check_out: {
         type: Sequelize.DATE(),
         allowNull: false,
+      },
+      status: {
+        type: Sequelize.STRING(40),
       },
     }, {
       sequelize,
