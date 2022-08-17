@@ -27,11 +27,11 @@ module.exports = class Petsitter extends Sequelize.Model {
         allowNull: false,
       },
       longitude: {
-        type: Sequelize.DECIMAL(max_digits=9, decimal_places=6),
+        type: Sequelize.DECIMAL(9, 6),
         allowNull: false,
       },
       latitude: {
-        type: Sequelize.DECIMAL(max_digits=9, decimal_places=6),
+        type: Sequelize.DECIMAL(9, 6),
         allowNull: false,
       }
     }, {
