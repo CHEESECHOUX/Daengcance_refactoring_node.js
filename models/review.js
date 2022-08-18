@@ -34,7 +34,6 @@ module.exports = class Review extends Sequelize.Model {
 
   static associate(db) {
     db.Review.hasMany(db.ReviewImage);
-    db.Review.hasMany(db.ReviewStatus);
     db.Review.belongsTo(db.User);
     db.Review.belongsTo(db.Petsitter);
   }

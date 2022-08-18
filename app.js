@@ -5,12 +5,14 @@ const path = require('path');
 const session = require('express-session');
 const nunjucks = require('nunjucks');
 const dotenv = require('dotenv');
+//Petsitter.belongsToMany(Type, { through: 'PetsitterType'});
+//Type.belongsToMany(Petsitter, { through: 'PetsitterType'});
 
 dotenv.config();
 const indexRouter = require('./routes');
 const userRouter = require('./routes/user');
 //const pageRouter = require('./routes/page');
-const { sequelize } = require('./models');
+const { sequelize, Type, Petsitter } = require('./models');
 
 const app = express();
 app.set('port', process.env.PORT || 8001);

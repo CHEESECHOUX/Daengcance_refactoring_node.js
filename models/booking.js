@@ -28,7 +28,6 @@ module.exports = class Booking extends Sequelize.Model {
 
 
   static associate(db) {
-    db.Booking.hasMany(db.BookingStatus);
     db.Booking.belongsTo(db.User);
     db.Booking.belongsTo(db.Petsitter);
   }
