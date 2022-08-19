@@ -9,12 +9,12 @@ const router = express.Router();
 router.post('/join', isNotLoggedIn, async (req, res, next) => {
   const { email, nick, password } = req.body;
   try {
-    const exUser = await User.findOne({ where: { email } }); 
+    const exUser = await User.findOne({ where: { email } });
     if (exUser) {
       return res.redirect('/join?error=exist');
     }
-    const hash = await bcrypt.hash(password, 12); //같은 이메일로 가입한 사용자가 없다면 비밀번호 암호화 및
-    await User.create({ //사용자 정보 생성
+    const hash = await bcrypt.hash(password, 12);
+    await User.create({
       email,
       nick,
       password: hash,
@@ -27,7 +27,7 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => {
 });
 
 router.post('/login', isNotLoggedIn, (req, res, next) => {
-  passport.authenticate('local', (authError, user, info) => { //미들웨어인데 라우터 미들웨어 안에 들어있음
+  passport.authenticate('local', (authError, user, info) => {
     if (authError) {
       console.error(authError);
       return next(authError);
@@ -48,6 +48,14 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
 router.get('/logout', isLoggedIn, (req, res) => {
   req.logout();
   req.session.destroy();
+  res.redirect('/');
+});
+
+router.get('/kakao', passport.authenticate('kakao'));
+
+router.get('/kakao/callback', passport.authenticate('kakao', {
+  failureRedirect: '/',
+}), (req, res) => {
   res.redirect('/');
 });
 

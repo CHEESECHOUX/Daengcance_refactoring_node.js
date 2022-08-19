@@ -3,11 +3,12 @@ const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 
 const User = require('../models/user');
+
 module.exports = () => {
-  passport.use(new LocalStrategy ({ //로그인 라우터의 req.body /async함수의 첫번째 두번째 매개변수가 됨
-    usernameField: 'email', 
+  passport.use(new LocalStrategy({
+    usernameField: 'email',
     passwordField: 'password',
-  }, async (email, password, done) => { //LocalStrategy 생성자의 두 번째 인수 /done 함수는 passport.authenticate의 콜백함수
+  }, async (email, password, done) => {
     try {
       const exUser = await User.findOne({ where: { email } });
       if (exUser) {
@@ -15,10 +16,10 @@ module.exports = () => {
         if (result) {
           done(null, exUser);
         } else {
-          done(null, false, { message: '비밀번호가 일치하지 않습니다.'});
+          done(null, false, { message: '비밀번호가 틀렸습니다.' });
         }
       } else {
-        done(null, false, { message: '가입되지 않은 회원입니다.'});
+        done(null, false, { message: '가입되지 않은 회원입니다.' });
       }
     } catch (error) {
       console.error(error);
