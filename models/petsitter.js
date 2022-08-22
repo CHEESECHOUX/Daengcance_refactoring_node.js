@@ -54,7 +54,6 @@ module.exports = class Petsitter extends Sequelize.Model {
     db.Petsitter.hasMany(db.Review);
     db.Petsitter.hasMany(db.Booking);
     db.Petsitter.belongsToMany(db.Type, {
-      //foreignKey: 'typeId',
       through: 'PetsitterType',
     });
   }

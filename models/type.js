@@ -22,7 +22,6 @@ module.exports = class Type extends Sequelize.Model {
 
   static associate(db) {
     db.Type.belongsToMany(db.Petsitter, {
-      //foreignKey: 'petsitterId',
       through: 'PetsitterType',
     });
   }

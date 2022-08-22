@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "0206",
-    "database": "ddangcance",
+    "database": "ddaengcance",
     "host": "127.0.0.1",
     "dialect": "mysql",
     "timezone": "+09:00"
