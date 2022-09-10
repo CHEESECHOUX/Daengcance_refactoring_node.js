@@ -6,7 +6,7 @@ const User = require('../models/user');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  res.send('Hello, user :D');
+  res.send("<h1>Hello, user :D</h1>");
 });
 
 module.exports = router;

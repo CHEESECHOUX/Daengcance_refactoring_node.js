@@ -6,6 +6,8 @@ const User = require('../models/user');
 
 const router = express.Router();
 
+let arr = [];
+
 router.post('/signup', isNotLoggedIn, async (req, res, next) => {
   const { email, nick, password } = req.body;
   try {
@@ -57,6 +59,34 @@ router.get('/kakao/callback', passport.authenticate('kakao', {
   failureRedirect: '/',
 }), (req, res) => {
   res.redirect('/');
+});
+
+router.put('/update/:id', isLoggedIn, (req, res) => {
+  return data.update({
+    id: req.params,
+    Password: req.body.Password
+}, {
+    where : {
+      id: id /*like this*/  }}).then(function (data) {
+    if (data) {
+        res.send(data)
+    } else {
+        res.status(400).send('Error')
+    }
+})
+  
+
+
+  //res.redirect('/');
+  })
+
+router.delete('/delete/:id', (req, res) => {
+  const { id } = req.params;
+  arr.splice(id, 1);
+  res.status(200).json({
+    message: 'delete 성공',
+    result: arr
+  });
 });
 
 module.exports = router;
