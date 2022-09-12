@@ -76,6 +76,7 @@
 //   console.log(app.get('port'), '번 포트에서 대기 중');
 // });
 
+// 여기부터 수정
 const path = require('path');
 
 const express = require('express');
@@ -83,20 +84,24 @@ const bodyParser = require('body-parser');
 
 const errorController = require('./controllers/error');
 const sequelize = require('./util/database');
-const Product = require('./models/product');
+const Petsitter = require('./models/petsitter');
+const PetsitterImage = require('./models/petsitter-image');
+const PetsitterPetSize = require('./models/petsitter-petsize');
+const PetsitterPrice = require('./models/petsitter-price');
+const PetsitterType = require('./models/petsitter-type');
 const User = require('./models/user');
-const Cart = require('./models/cart');
-const CartItem = require('./models/cart-item');
-const Order = require('./models/order');
-const OrderItem = require('./models/order-item');
+const Booking = require('./models/booking');
+const Review = require('./models/review');
+const ReviewImage = require('./models/review-image');
+const Type = require('./models/type');
 
 const app = express();
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
-const adminRoutes = require('./routes/admin');
-const shopRoutes = require('./routes/shop');
+// const adminRoutes = require('./routes/admin');
+// const shopRoutes = require('./routes/shop');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -110,24 +115,49 @@ app.use((req, res, next) => {
   .catch(err => console.log(err));
 });
 
-app.use('/admin', adminRoutes);
-app.use(shopRoutes);
+// app.use('/admin', adminRoutes);
+// app.use(shopRoutes);
 
 app.use(errorController.get404);
 
-Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
-User.hasMany(Product);
-User.hasOne(Cart);
-Cart.belongsTo(User);
-Cart.belongsToMany(Product, { through: CartItem });
-Product.belongsToMany(Cart, { through: CartItem });
-Order.belongsTo(User);
-User.hasMany(Order);
-Order.belongsToMany(Product, { through: OrderItem });
+Petsitter.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
+User.hasMany(Petsitter);
+User.hasMany(Review);
+User.hasMany(Booking);
 
-sequelize
+Petsitter.hasMany(PetsitterImage);
+Petsitter.hasMany(PetsitterPetSize);
+Petsitter.hasMany(PetsitterPrice);
+Petsitter.hasMany(Review);
+Petsitter.hasMany(Booking);
+Petsitter.belongsToMany(Type, { through: PetsitterType });
+
+PetsitterImage.belongsTo(Petsitter);
+PetsitterPetSize.belongsTo(Petsitter);
+PetsitterPrice.belongsTo(Petsitter);
+Review.hasMany(ReviewImage);
+Review.belongsTo(User);
+Review.belongsTo(Petsitter);
+ReviewImage.belongsTo(Review);
+Type.belongsToMany(Petsitter, { through: PetsitterType });
+Booking.belongsTo(User);
+Booking.belongsTo(Petsitter);
+
+sequelize.query('SET FOREIGN_KEY_CHECKS = 0')
+  .then(function() {
+  sequelize
+    .sync({ force: true })
+    .then(function() {
+      sequelize.query('SET FOREIGN_KEY_CHECKS = 1')
+        .then(function() {
+          console.log('Database synchronised');
+        });
+    }).error(function(err) {
+        console.log(err);
+    });
+})
   // .sync({ force: true })       // 새로운 코드 db에 적용시키기 (매번 데이터가 사라지니까 주석처리)
-  .sync()
+  // .sync()
   .then(result => {
     return User.findByPk(1);
     // console.log(result);

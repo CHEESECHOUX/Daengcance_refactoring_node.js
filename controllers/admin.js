@@ -1,20 +1,20 @@
-const Product = require('../models/product');
+const Petsitter = require('../models/petsitter');
 
-exports.getAddProduct = (req, res, next) => {
-  res.render('admin/edit-product', {
-    pageTitle: 'Add Product',
-    path: '/admin/add-product',
+exports.getAddPetsitter = (req, res, next) => {
+  res.render('admin/edit-petsitter', {
+    pageTitle: 'Add Petsitter',
+    path: '/admin/add-petsitter',
     editing: false
   });
 };
 
-exports.postAddProduct = (req, res, next) => {
+exports.postAddPetsitter = (req, res, next) => {
   const title = req.body.title;
   const imageUrl = req.body.imageUrl;
   const price = req.body.price;
   const description = req.body.description;
   req.user
-  .createProduct({
+  .createPetsitter({
     title: title,
     price: price,
     imageUrl: imageUrl,
@@ -22,8 +22,8 @@ exports.postAddProduct = (req, res, next) => {
   })
     .then(result => {
       // console.log(result);
-      console.log('Created Product');
-      res.redirect('/admin/products');
+      console.log('Created Petsitter');
+      res.redirect('/admin/petsitters');
     })
     .catch(err => {
       console.log(err)
@@ -35,75 +35,75 @@ exports.postAddProduct = (req, res, next) => {
     // .catch(err => console.log(err));
 };
 
-exports.getEditProduct = (req, res, next) => {
+exports.getEditPetsitter = (req, res, next) => {
   const editMode = req.query.edit;
   if (!editMode) {
     return res.redirect('/');
   }
-  const prodId = req.params.productId;
+  const petstId = req.params.petsitterId;
   req.user
-  .getProducts({where: {id: prodId}})
-  // Product.findByPk(prodId)
-  .then(products => {
-    const product = products[0];
-    if (!product) {
+  .getPetsitters({where: {id: petstId}})
+  // Petsitter.findByPk(petstId)
+  .then(petsitters => {
+    const petsitter = petsitters[0];
+    if (!petsitter) {
       return res.redirect('/');
     }
-    res.render('admin/edit-product', {
-      pageTitle: 'Edit Product',
-      path: '/admin/edit-product',
+    res.render('admin/edit-petsitter', {
+      pageTitle: 'Edit Petsitter',
+      path: '/admin/edit-petsitter',
       editing: editMode,
-      product: product
+      petsitter: petsitter
     });
   })
   .catch(err => console.log(err)
   );
 };
 
-exports.postEditProduct = (req, res, next) => {
-  const prodId = req.body.productId;
+exports.postEditPetsitter = (req, res, next) => {
+  const petstId = req.body.petsitterId;
   const updatedTitle = req.body.title;
   const updatedPrice = req.body.price;
   const updatedImageUrl = req.body.imageUrl;
   const updatedDesc = req.body.description;
-  Product.findByPk(prodId)
-    .then(product => {
-      product.title = updatedTitle;
-      product.price = updatedPrice;
-      product.description = updatedDesc;
-      product.imageUrl = updatedImageUrl;
-      return product.save();
+  Petsitter.findByPk(petstId)
+    .then(petsitter => {
+      petsitter.title = updatedTitle;
+      petsitter.price = updatedPrice;
+      petsitter.description = updatedDesc;
+      petsitter.imageUrl = updatedImageUrl;
+      return petsitter.save();
     })
     .then(result => {
-      console.log('UPDATED PRODUCT!');
-      res.redirect('/admin/products');
+      console.log('UPDATED Petsitter!');
+      res.redirect('/admin/petsitters');
     })
     .catch(err => console.log(err));
 };
 
-exports.getProducts = (req, res, next) => {
-  // Product.findAll()
+exports.getPetsitters = (req, res, next) => {
+  // Petsitter.findAll()
   req.user
-  .getProducts() 
-  .then(products => {
-    res.render('admin/products', {
-      prods: products,
-      pageTitle: 'Admin Products',
-      path: '/admin/products'
+  .getPetsitters() 
+  .then(petsitters => {
+    res.render('admin/petsitters', {
+      prods: petsitters,
+      pageTitle: 'Admin Petsitters',
+      path: '/admin/petsitters'
     });
   })
   .catch(err => console.log(err));
 };
 
-exports.postDeleteProduct = (req, res, next) => {
-  const prodId = req.body.productId;
-  Product.findByPk(prodId)
-    .then(product => {
-      return product.destroy();
+exports.postDeletePetsitter = (req, res, next) => {
+  const petstId = req.body.petsitterId;
+  Petsitter.findByPk(petstId)
+    .then(petsitter => {
+      return petsitter.destroy();
     })
     .then(result => {
-      console.log('DESTROYED PRODUCT');
-      res.redirect('/admin/products');
+      console.log('DESTROYED PETSITTER');
+      res.redirect('/admin/petsitters');
     })
     .catch(err => console.log(err));
 };

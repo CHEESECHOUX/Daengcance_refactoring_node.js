@@ -1,12 +1,12 @@
-const Product = require('../models/product');
+const Petsitter = require('../models/petsitter');
 
-exports.getProducts = (req, res, next) => {
-  Product.findAll()
-    .then(products => {
-      res.render('shop/product-list', {
-        prods: products,
-        pageTitle: 'All Products',
-        path: '/products'
+exports.getPetsitters = (req, res, next) => {
+  Petsitter.findAll()
+    .then(petsitters => {
+      res.render('shop/petsitter-list', {
+        petsts: petsitters,
+        pageTitle: 'All Petsitters',
+        path: '/petsitters'
       });
     })
     .catch(err => {
@@ -15,33 +15,33 @@ exports.getProducts = (req, res, next) => {
 };
 
 // findAll, findByPk 둘 다 사용 가능
-exports.getProduct = (req, res, next) => {
-  const prodId = req.params.productId;
-  // Product.findAll({where: { id: prodId } }) 
-  //   .then(products => {
-  //     res.render('shop/product-detail', {
-  //       product: products[0], // findAll 함수는 디폴트로 배열을 줌 0으로 잡아줘야함
-  //       pageTitle: products[0].title,
-  //       path: '/products'
+exports.getPetsitter = (req, res, next) => {
+  const petsitterId = req.params.petsitterId;
+  // Petsitter.findAll({where: { id: petstId } }) 
+  //   .then(petsitters => {
+  //     res.render('shop/petsitter-detail', {
+  //       pretsitter: petsitters[0], // findAll 함수는 디폴트로 배열을 줌 0으로 잡아줘야함
+  //       pageTitle: petsitters[0].title,
+  //       path: '/petsitters'
   //     });
   //   })
   //   .catch(err => console.log(err));
-  Product.findByPk(prodId) 
-    .then(product => {
-      res.render('shop/product-detail', {
-        product: product,
-        pageTitle: product.title,
-        path: '/products'
+  Petsitter.findByPk(petsitterId) 
+    .then(petsitter => {
+      res.render('shop/petsitter-detail', {
+        petsitter: petsitter,
+        pageTitle: petsitter.title,
+        path: '/petsitters'
       });
     })
     .catch(err => console.log(err));
 };
 
 exports.getIndex = (req, res, next) => {
-  Product.findAll()
-    .then(products => {
+  Petsitter.findAll()
+    .then(petsitters => {
       res.render('shop/index', {
-        prods: products,
+        petsts: petsitters,
         pageTitle: 'Shop',
         path: '/'
       });
