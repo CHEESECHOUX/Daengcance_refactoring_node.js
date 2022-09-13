@@ -143,21 +143,23 @@ Type.belongsToMany(Petsitter, { through: PetsitterType });
 Booking.belongsTo(User);
 Booking.belongsTo(Petsitter);
 
-sequelize.query('SET FOREIGN_KEY_CHECKS = 0')
-  .then(function() {
-  sequelize
-    .sync({ force: true })
-    .then(function() {
-      sequelize.query('SET FOREIGN_KEY_CHECKS = 1')
-        .then(function() {
-          console.log('Database synchronised');
-        });
-    }).error(function(err) {
-        console.log(err);
-    });
-})
+//sequelize.query('SET FOREIGN_KEY_CHECKS = 0')
+  //.then(function() {
+  //sequelize
+  //    .sync({ force: true })
+  //    .then(function() {
+  //      sequelize.query('SET FOREIGN_KEY_CHECKS = 1')
+  //        .then(function() {
+  //          console.log('Database synchronised');
+  //        });
+  //    }).error(function(err) {
+  //        console.log(err);
+  //    });
+  //})
+
   // .sync({ force: true })       // 새로운 코드 db에 적용시키기 (매번 데이터가 사라지니까 주석처리)
-  // .sync()
+sequelize
+  .sync()
   .then(result => {
     return User.findByPk(1);
     // console.log(result);
