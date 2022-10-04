@@ -15,7 +15,7 @@ const Petsitter = sequelize.define('petsitter', {
   },
   name: {
     type: Sequelize.STRING(40),
-    allowNull: false,
+    allowNull: true,
   },
   title: {
     type: Sequelize.STRING(100),
@@ -23,7 +23,7 @@ const Petsitter = sequelize.define('petsitter', {
   },
   grade: {
     type: Sequelize.STRING(40),
-    allowNull: false,
+    allowNull: true,
   },
   count: {
     type: Sequelize.INTEGER(30),
@@ -34,15 +34,15 @@ const Petsitter = sequelize.define('petsitter', {
   },
   address: {
     type: Sequelize.STRING(100),
-    allowNull: false,
+    allowNull: true,
   },
   longitude: {
     type: Sequelize.DECIMAL(9, 6),
-    allowNull: false,
+    allowNull: true,
   },
   latitude: {
     type: Sequelize.DECIMAL(9, 6),
-    allowNull: false,
+    allowNull: true,
   },
 }, {
     sequelize,

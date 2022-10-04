@@ -6,9 +6,9 @@
         <%- include('../includes/navigation.ejs') %>
 
             <main>
-                <% if (petsts.length > 0) { %>
+                <% if (prods.length > 0) { %>
                     <div class="grid">
-                        <% for (let petsitter of petsts) { %>
+                        <% for (let petsitter of prods) { %>
                             <article class="card petsitter-item">
                                 <header class="card__header">
                                     <h1 class="petsitter__title">
@@ -27,14 +27,18 @@
                                     </p>
                                 </div>
                                 <div class="card__actions">
-                                    <a href="/petsitters/<%= petsitter.id %>" class="btn">Details</a>
-                                    <%- include('../includes/add-to-cart.ejs', {petsitter: petsitter}) %>
+                                    <a href="/admin/edit-petsitter/<%= petsitter.id %>?edit=true" class="btn">Edit</a>
+                                    <form action="/admin/delete-petsitter" method="POST">
+                                        <input type="hidden" value="<%= petsitter.id %>" name="petsitterId">
+                                        <button class="btn" type="submit">Delete</button>
+                                    </form>
+
                                 </div>
                             </article>
                             <% } %>
                     </div>
                     <% } else { %>
-                        <h1>No petsitters Found!</h1>
+                        <h1>No Petsitters Found!</h1>
                         <% } %>
             </main>
             <%- include('../includes/end.ejs') %>

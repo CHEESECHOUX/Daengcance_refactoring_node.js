@@ -1,14 +1,14 @@
 <%- include('../includes/head.ejs') %>
-    <link rel="stylesheet" href="/css/petsitter.css">
+    <link rel="stylesheet" href="/css/product.css">
 </head>
 
 <body>
     <%- include('../includes/navigation.ejs') %>
 
     <main>
-        <% if (prods.length > 0) { %>
+        <% if (petsts.length > 0) { %>
             <div class="grid">
-                <% for (let petsitter of prods) { %>
+                <% for (let petsitter of petsts) { %>
                     <article class="card petsitter-item">
                         <header class="card__header">
                             <h1 class="petsitter__title"><%= petsitter.title %></h1>

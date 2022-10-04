@@ -99,9 +99,13 @@ const app = express();
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
+app.set('views', path.join(__dirname, 'views'));
 
-// const adminRoutes = require('./routes/admin');
-// const shopRoutes = require('./routes/shop');
+// app.engine('html', require('ejs').renderFile);
+// app.set('view engine', 'html');
+
+const adminRoutes = require('./routes/admin');
+const shopRoutes = require('./routes/shop');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -115,8 +119,8 @@ app.use((req, res, next) => {
   .catch(err => console.log(err));
 });
 
-// app.use('/admin', adminRoutes);
-// app.use(shopRoutes);
+app.use('/admin', adminRoutes);
+app.use(shopRoutes);
 
 app.use(errorController.get404);
 
@@ -144,18 +148,18 @@ Booking.belongsTo(User);
 Booking.belongsTo(Petsitter);
 
 //sequelize.query('SET FOREIGN_KEY_CHECKS = 0')
-  //.then(function() {
-  //sequelize
-  //    .sync({ force: true })
-  //    .then(function() {
-  //      sequelize.query('SET FOREIGN_KEY_CHECKS = 1')
-  //        .then(function() {
-  //          console.log('Database synchronised');
-  //        });
-  //    }).error(function(err) {
-  //        console.log(err);
-  //    });
-  //})
+//  .then(function() {
+//  sequelize
+//      .sync({ force: true })
+//      .then(function() {
+//        sequelize.query('SET FOREIGN_KEY_CHECKS = 1')
+//          .then(function() {
+//            console.log('Database synchronised');
+//          });
+//      }).error(function(err) {
+//          console.log(err);
+//      });
+//  })
 
   // .sync({ force: true })       // 새로운 코드 db에 적용시키기 (매번 데이터가 사라지니까 주석처리)
 sequelize
@@ -171,13 +175,13 @@ sequelize
     return Promise.resolve(user);
     return user;
   })
-  .then(user => {
-    // console.log(user);
-    return user.createCart();
+  // .then(user => {
+  //   // console.log(user);
+  //   return user.createCart();
   
-  })
+  // })
   .then(cart => {
-    app.listen(3000);
+    app.listen(8000);
   })                         
   .catch(err => {
     console.log(err);
