@@ -81,6 +81,8 @@ const path = require('path');
 
 const express = require('express');
 const bodyParser = require('body-parser');
+const session = require('express-session');
+const MySQLStore = require('express-mysql-session')(session);
 
 const errorController = require('./controllers/error');
 const sequelize = require('./util/database');
@@ -95,25 +97,43 @@ const Review = require('./models/review');
 const ReviewImage = require('./models/review-image');
 const Type = require('./models/type');
 
+const options = {
+  host: 'localhost',
+  port: 3306,
+  user: 'root',
+  password: 'password',
+  database: 'node_complete'
+}
+
 const app = express();
+const store = new MySQLStore(options);
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
-app.set('views', path.join(__dirname, 'views'));
+// app.set('views', path.join(__dirname, 'views'));
 
 // app.engine('html', require('ejs').renderFile);
 // app.set('view engine', 'html');
 
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
+const authRoutes = require('./routes/auth');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(
+  session({
+    secret: 'my secret',
+    resave: false,
+    saveUninitialized: false,
+    store: store,
+  })
+);
 
 app.use((req, res, next) => {
   User.findByPk(1)
   .then(user => {
-    req.user= user;
+    req.user = user;
     next();
   })
   .catch(err => console.log(err));
@@ -121,6 +141,7 @@ app.use((req, res, next) => {
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
+app.use(authRoutes);
 
 app.use(errorController.get404);
 
@@ -165,24 +186,27 @@ Booking.belongsTo(Petsitter);
 sequelize
   .sync()
   .then(result => {
-    return User.findByPk(1);
-    // console.log(result);
-    })
-  .then(user => {
-    if (!user) {
-      return User.create({ name: 'Jisoo', email: 'Jisoo@test.com' });
-    }
-    return Promise.resolve(user);
-    return user;
+    app.listen(8000);
   })
+  // .then(result => {
+  //   return User.findByPk(1);
+  //   // console.log(result);
+  //   })
+  // .then(user => {
+  //   if (!user) {
+  //     return User.create({ name: 'Jisoo', email: 'Jisoo@test.com' });
+  //   }
+  //   return Promise.resolve(user);
+  //   return user;
+  // })
   // .then(user => {
   //   // console.log(user);
   //   return user.createCart();
   
   // })
-  .then(cart => {
-    app.listen(8000);
-  })                         
+  // .then(cart => {
+  //   app.listen(8000);
+  // })                         
   .catch(err => {
     console.log(err);
   });
