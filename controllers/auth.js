@@ -1,3 +1,5 @@
+const bcrypt = require('bcryptjs');
+
 const User = require('../models/user');
 
 exports.getLogin = (req, res, next) => {
@@ -29,7 +31,7 @@ exports.getSignup = (req, res, next) => {
 };
 
 exports.postLogin = (req, res, next) => {
-  const email = req.body.email;
+  const email = req.body.email; // 요청에서 이메일 추출
   const password = req.body.password;
   User.findOne({ email: email })
     .then(user => {
@@ -38,12 +40,12 @@ exports.postLogin = (req, res, next) => {
         return res.redirect('/login');
       }
       bcrypt
-        .compare(password, user.password)
+        .compare(password, user.password) // 요청안에 패스워드, DB내 패스워드
         .then(doMatch => {
-          if (doMatch) {
+          if (doMatch) { // 비밀번호가 같다면 세션까지 설정
             req.session.isLoggedIn = true;
             req.session.user = user;
-            return req.session.save(err => {
+            return req.session.save(err => { // login페이지로 가지 않도록 return
               console.log(err);
               res.redirect('/');
             });
@@ -58,22 +60,22 @@ exports.postLogin = (req, res, next) => {
 exports.postSignup = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
-  const confirmPassword = req.body.confirmPassword;
-  User.findOne({ email: email })
+  const confirmPassword = req.body.confirmPasswordㄴ
+  User.findOne({ email: email }) // DB 모델 이메일 : 추출한 이메일
     .then(userDoc => {
-      if (userDoc) {
+      if (userDoc) { // 사용자 있다면
         req.flash('error', 'E-Mail exists already, please pick a different one. ');
         return res.redirect('/signup');
       }
       return bcypt
-      .hash(password, 12)
+      .hash(password, 12) // 해시하고 싶은 문자열, 솔트값
       .then(hashedPassword => {
         const user = new User({
           email: email,
           password: hashedPassword,
-          cart: { items: [] }
+          cart: { items: [] } // 디폴트로 빈 배열인  객체
         });
-        return user.save();
+        return user.save(); // DB에 저장
       })
       .then(result => {
         res.redirect('/login');
@@ -82,4 +84,11 @@ exports.postSignup = (req, res, next) => {
     .catch(err => {
       console.log(err);
     });
+};
+
+exports.postLogout = (req, res, next) => {
+  req.session.destroy(err => {
+    console.log(err);
+    res.redirect('/');
+  });
 };
