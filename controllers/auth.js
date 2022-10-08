@@ -60,14 +60,14 @@ exports.postLogin = (req, res, next) => {
 exports.postSignup = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
-  const confirmPassword = req.body.confirmPassword
+  const confirmPassword = req.body.confirmPassword;
   User.findOne({ email: email }) // DB 모델 이메일 : 추출한 이메일
     .then(userDoc => {
       if (userDoc) { // 사용자 있다면
         req.flash('error', 'E-Mail exists already, please pick a different one. ');
         return res.redirect('/signup');
       }
-      return bcypt
+      return bcrypt
       .hash(password, 12) // 해시하고 싶은 문자열, 솔트값
       .then(hashedPassword => {
         const user = new User({

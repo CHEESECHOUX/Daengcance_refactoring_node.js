@@ -192,8 +192,9 @@ Booking.belongsTo(Petsitter);
 //      });
 //  })
 
-  // .sync({ force: true })       // 새로운 코드 db에 적용시키기 (매번 데이터가 사라지니까 주석처리)
+  
 sequelize
+  // .sync({ force: true })       // 새로운 코드 db에 적용시키기 (매번 데이터가 사라지니까 주석처리)
   .sync()
   .then(result => {
     app.listen(8000);
