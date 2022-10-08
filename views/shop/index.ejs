@@ -22,8 +22,10 @@
                             <p class="petsitter__description"><%= petsitter.description %></p>
                         </div>
                         <div class="card__actions">
-                                <a href="/petsitters/<%= petsitter.id %>" class="btn">Details</a>
-                            <%- include('../includes/add-to-cart.ejs', {petsitter: petsitter}) %>
+                            <a href="/petsitters/<%= petsitter.id %>" class="btn">Details</a>
+                            <% if (isAuthenticated) { %>
+                                <%- include('../includes/add-to-cart.ejs', {petsitter: petsitter}) %>
+                            <% } %>
                         </div>
                     </article>
                 <% } %>

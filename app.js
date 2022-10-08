@@ -83,7 +83,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
-const csrf = require('csurf');
 const flash = require('connect-flash');
 
 const errorController = require('./controllers/error');
@@ -109,11 +108,10 @@ const options = {
 
 const app = express();
 const store = new MySQLStore(options);
-const csrfProtection = csrf();
 
 app.set('view engine', 'ejs');
-app.set('views', 'views');
-// app.set('views', path.join(__dirname, 'views'));
+// app.set('views', 'views');
+app.set('views', path.join(__dirname, 'views'));
 
 // app.engine('html', require('ejs').renderFile);
 // app.set('view engine', 'html');
@@ -132,7 +130,6 @@ app.use(
     store: store,
   })
 );
-app.use(csrfProtection);
 app.use(flash());
 
 app.use((req, res, next) => { // user 추출 
@@ -149,7 +146,6 @@ app.use((req, res, next) => { // user 추출
 
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.session.isLoggedIn;
-  res.locals.csrfToken = req.csrfToken();
   next();
 });
 

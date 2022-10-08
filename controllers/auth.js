@@ -60,7 +60,7 @@ exports.postLogin = (req, res, next) => {
 exports.postSignup = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
-  const confirmPassword = req.body.confirmPasswordㄴ
+  const confirmPassword = req.body.confirmPassword
   User.findOne({ email: email }) // DB 모델 이메일 : 추출한 이메일
     .then(userDoc => {
       if (userDoc) { // 사용자 있다면
