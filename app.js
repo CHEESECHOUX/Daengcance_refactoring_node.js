@@ -122,6 +122,8 @@ const authRoutes = require('./routes/auth');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: false }));
 app.use(
   session({
     secret: 'my secret',
@@ -136,10 +138,10 @@ app.use((req, res, next) => { // user 추출
   if (!req.session.user) {
     return next();
   }
-  User.findbyPk(req.session.user._id)
+  User.findByPk(req.session.user._id)
   .then(user => {
     req.user = user;
-    next
+    next();
   })
   .catch(err => console.log(err));
 });

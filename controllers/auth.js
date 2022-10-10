@@ -9,6 +9,7 @@ exports.getLogin = (req, res, next) => {
   } else {
     message = null;
   }
+  console.log(req.session.isLoggedIn);
   res.render('auth/login', {
     path: '/login',
     pageTitle: 'Login',
@@ -33,7 +34,7 @@ exports.getSignup = (req, res, next) => {
 exports.postLogin = (req, res, next) => {
   const email = req.body.email; // 요청에서 이메일 추출
   const password = req.body.password;
-  User.findOne({ email: email })
+  User.findOne({ where: { email: email }, })
     .then(user => {
       if (!user) {
         req.flash('error', 'Invalid email or password.');
@@ -52,16 +53,21 @@ exports.postLogin = (req, res, next) => {
           }
           req.flash('error', 'Invalid email or password.');
           res.redirect('/login');
+        })
+        .catch(err => {
+          console.log(err);
+          res.redirect('/login');
         });
-      })
-      .catch(err => console.log(err));
+    })
+    .catch(err => console.log(err));
 };
 
 exports.postSignup = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
   const confirmPassword = req.body.confirmPassword;
-  User.findOne({ email: email }) // DB 모델 이메일 : 추출한 이메일
+  User.findOne({ where: { email: email },
+    }) // DB 모델 이메일 : 추출한 이메일
     .then(userDoc => {
       if (userDoc) { // 사용자 있다면
         req.flash('error', 'E-Mail exists already, please pick a different one. ');
