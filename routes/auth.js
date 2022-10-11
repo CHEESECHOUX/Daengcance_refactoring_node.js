@@ -1,4 +1,5 @@
 const express = require('express');
+const passport = require('passport');
 
 const authController = require('../controllers/auth');
 
@@ -13,6 +14,14 @@ router.post('/login', authController.postLogin);
 router.post('/signup', authController.postSignup);
 
 router.post('/logout', authController.postLogout);
+
+// router.get('/kakao', passport.authenticate('kakao'));
+
+// router.get('/kakao/callback', passport.authenticate('kakao', {
+//   failureRedirect: '/',
+// }), (req, res) => {
+//   res.redirect('/');
+// });
 
 module.exports = router;
 

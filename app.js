@@ -110,7 +110,7 @@ const app = express();
 const store = new MySQLStore(options);
 
 app.set('view engine', 'ejs');
-// app.set('views', 'views');
+app.set('views', 'views');
 app.set('views', path.join(__dirname, 'views'));
 
 // app.engine('html', require('ejs').renderFile);
@@ -119,6 +119,7 @@ app.set('views', path.join(__dirname, 'views'));
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 const authRoutes = require('./routes/auth');
+// const pageRouter = require('./routes/page');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -154,6 +155,7 @@ app.use((req, res, next) => {
 app.use('/admin', adminRoutes); // 전체 라우트
 app.use(shopRoutes);
 app.use(authRoutes);
+// app.use('/', pageRouter);
 
 app.use(errorController.get404);
 
@@ -199,7 +201,7 @@ sequelize
   // .sync({ force: true })       // 새로운 코드 db에 적용시키기 (매번 데이터가 사라지니까 주석처리)
   .sync()
   .then(result => {
-    app.listen(8000);
+    app.listen(8001);
   })
   // .then(result => {
   //   return User.findByPk(1);

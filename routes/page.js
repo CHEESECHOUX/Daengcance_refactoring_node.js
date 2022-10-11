@@ -11,9 +11,9 @@
 // });
 
 // router.get('/profile', isLoggedIn, (req, res) => {
-//   res.render('profile', {title: '내정보 - daengcance'});
+//   res.render('profile', { title: '내정보 - daengcance' });
 // });
 
 // router.get('/join', isNotLoggedIn, (req, res) => {
-//   res.render('join', {title: '회원가입 - daengcance'});
+//   res.render('join', { title: '회원가입 - daengcance' });
 // });
