@@ -10,15 +10,15 @@ exports.getAddPetsitter = (req, res, next) => {
 
 exports.postAddPetsitter = (req, res, next) => {
   const title = req.body.title;
-  const imageUrl = req.body.imageUrl;
+  const petsitterImageUrl = req.body.imageUrl;
   const price = req.body.price;
   const description = req.body.description;
   const petsitter = new Petsitter({
     title: title,
     price: price,
-    imageUrl: imageUrl,
     description: description,
     userId: req.user,
+    imageUrl: petsitterImageUrl
   });
   petsitter
     .save()
@@ -29,7 +29,7 @@ exports.postAddPetsitter = (req, res, next) => {
     })
     .catch(err => {
       console.log(err)
-  });
+    });
 };
 
 exports.getEditPetsitter = (req, res, next) => {

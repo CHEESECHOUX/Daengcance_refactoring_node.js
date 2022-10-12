@@ -44,6 +44,18 @@ const Petsitter = sequelize.define('petsitter', {
     type: Sequelize.DECIMAL(9, 6),
     allowNull: true,
   },
+  imageUrl: {
+    type: Sequelize.STRING(1000),
+    allowNull: true,
+  },
+  description: {
+    type: Sequelize.STRING(2000),
+    allowNull: true
+  },
+  price: {
+    type: Sequelize.DECIMAL(6, 2),
+    allowNull: false
+  },
 }, {
     sequelize,
     timestamps: true,

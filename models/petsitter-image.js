@@ -12,9 +12,12 @@ const PetsitterImage = sequelize.define('petsitterImage', {
     allowNull: false,
     primaryKey: true
   },
-  petsitter_image_url: {
+  petsitterImageUrl: {
     type: Sequelize.STRING(1000),
     allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   },
 }, {
   sequelize,
