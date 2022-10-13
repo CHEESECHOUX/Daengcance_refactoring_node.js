@@ -61,7 +61,7 @@ exports.postEditPetsitter = (req, res, next) => {
   const updatedImageUrl = req.body.imageUrl;
   const updatedDesc = req.body.description;
   Petsitter.findByPk(petstId)
-    .then(petsitter => {
+    .then(petsitter => { // petsitter은 MySQL의 객체임
       petsitter.title = updatedTitle;
       petsitter.price = updatedPrice;
       petsitter.description = updatedDesc;
@@ -76,7 +76,7 @@ exports.postEditPetsitter = (req, res, next) => {
 };
 
 exports.getPetsitters = (req, res, next) => {
-  Petsitter.findOne()
+  Petsitter.findAll()
   .then(petsitters => {
     console.log(petsitters);
     res.render('admin/petsitters', {

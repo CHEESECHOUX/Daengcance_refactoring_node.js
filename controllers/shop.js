@@ -50,3 +50,40 @@ exports.getIndex = (req, res, next) => {
       console.log(err);
     });
 };
+
+exports.getCart = (req, res, next) => {
+  req.user
+  .populate('cart.items.petsitterId')
+  .execPopulate()
+  .then(user => {
+    const petsitters = user.cart.items;
+    res.render('shop/cart', {
+      path: '/cart',
+      pageTitle: 'Your Cart',
+      petsitters: petsitters,
+    });
+  })
+  .catch(err => console.log(err));
+};
+
+exports.postCart = (req, res, next) => {
+  const petstId = req.body.petsitterId;
+  Petsitter.findByPk(petstId)
+    .then(petsitter => {
+      return req.user.addToCart(petsitter);
+    })
+    .then(result => {
+      console.log(result);
+      res.redirect('/cart');
+    });
+};
+
+exports.postCartDeletePetsitter = (req, res, next) => {
+  const petstId = req.body.petsitterId;
+  req.user
+    .removeFromCart(petstId)
+    .then(result => {
+      res.redirect('/cart');
+    })
+    .catch(err => console.log(err));
+};
