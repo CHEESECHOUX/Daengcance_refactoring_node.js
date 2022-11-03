@@ -5,7 +5,7 @@ const sequelize = require('../util/database');
 // module.exports = class Booking extends Sequelize.Model {
 //   static init(sequelize) {
 //     return super.init({
-const Booking = sequelize.define('booking', {
+const cart = sequelize.define('cart', {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
@@ -28,17 +28,17 @@ const Booking = sequelize.define('booking', {
   sequelize,
   timestamps: true,
   underscored: false,
-  modelName: 'Booking',
-  tableName: 'bookings',
+  modelName: 'Cart',
+  tableName: 'carts',
   paranoid: true,
   charset: 'utf8',
   collate: 'utf8_general_ci',
 });
 
-module.exports = Booking;
+module.exports = cart;
 
 //   static associate(db) {
-//     db.Booking.belongsTo(db.User);
-//     db.Booking.belongsTo(db.Petsitter);
+//     db.Cart.belongsTo(db.User);
+//     db.Cart.belongsTo(db.Petsitter);
 //   }
 // };
