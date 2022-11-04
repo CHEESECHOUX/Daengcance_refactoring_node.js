@@ -80,13 +80,13 @@
 const path = require('path');
 
 const express = require('express');
+const sequelize = require('./util/database');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const flash = require('connect-flash');
-
 const errorController = require('./controllers/error');
-const sequelize = require('./util/database');
+
 const Petsitter = require('./models/petsitter');
 const PetsitterImage = require('./models/petsitter-image');
 const PetsitterPetSize = require('./models/petsitter-petsize');
@@ -104,8 +104,20 @@ const options = {
   port: 3306,
   user: 'root',
   password: 'password',
-  database: 'node_complete'
-}
+  database: 'ddaengcance',
+  createDatabaseTable: true,
+  connectionLimit: 1,
+  endConnectionOnClose: true,
+  charset: 'utf8mb4_bin',
+  schema: {
+    tableName: 'sessions',
+    columnNames: {
+      session_id: 'session_id',
+      expires: 'expires',
+      data: 'data'
+    }
+  }
+};
 
 const app = express();
 const store = new MySQLStore(options);
@@ -183,21 +195,6 @@ Type.belongsToMany(Petsitter, { through: PetsitterType });
 Cart.belongsTo(User);
 Cart.belongsToMany(Petsitter, { through: CartItem });
 
-//sequelize.query('SET FOREIGN_KEY_CHECKS = 0')
-//  .then(function() {
-//  sequelize
-//      .sync({ force: true })
-//      .then(function() {
-//        sequelize.query('SET FOREIGN_KEY_CHECKS = 1')
-//          .then(function() {
-//            console.log('Database synchronised');
-//          });
-//      }).error(function(err) {
-//          console.log(err);
-//      });
-//  })
-
-  
 sequelize
   //.sync({ force: true })       // 새로운 코드 db에 적용시키기 (매번 데이터가 사라지니까 주석처리)
   .sync()

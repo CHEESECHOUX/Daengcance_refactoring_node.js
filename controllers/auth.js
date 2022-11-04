@@ -44,7 +44,7 @@ exports.postLogin = (req, res, next) => {
         .compare(password, user.password) // 요청안에 패스워드, DB내 패스워드
         .then(doMatch => {
           if (doMatch) { // 비밀번호가 같다면 세션까지 설정
-            req.session.isLoggedIn = true;
+            req.session.isLoggedIn = true; // 여기서 설정이 안 돼서 DB에 안 들어가는 듯
             req.session.user = user;
             return req.session.save(err => { // login페이지로 가지 않도록 return
               console.log(err);
