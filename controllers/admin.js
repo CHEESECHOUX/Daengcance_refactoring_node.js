@@ -88,10 +88,13 @@ exports.getPetsitters = (req, res, next) => {
   .catch(err => console.log(err));
 };
 
-exports.postDeletePetsitter = (req, res, next) => {
+exports.deletePetsitter = (req, res, next) => {
   const petstId = req.body.petsitterId;
-  Petsitter.findByPkAndRemove(petstId)
-    .then(() => {
+  Petsitter.findByPk(petstId)
+    .then(petsitter => {
+      return petsitter.destroy();
+    })
+    .then(result => {
       console.log('DESTROYED PETSITTER');
       res.redirect('/admin/petsitters');
     })
