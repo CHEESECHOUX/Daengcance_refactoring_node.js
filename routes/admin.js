@@ -16,7 +16,7 @@ router.get('/petsitters', isAuth, adminController.getPetsitters);
 // /admin/add-petsitter => POST
 router.post('/add-petsitter', isAuth, adminController.postAddPetsitter);
 
-router.get('/edit-product/:petsitterId', isAuth, adminController.getEditPetsitter);
+router.get('/edit-petsitter/:petsitterId', isAuth, adminController.getEditPetsitter);
 
 router.post('/edit-petsitter', isAuth, adminController.postEditPetsitter);
 
