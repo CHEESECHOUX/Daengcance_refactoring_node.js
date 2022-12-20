@@ -5,12 +5,12 @@
     <body>
         <%- include('../includes/navigation.ejs') %>
         <main>
-            <% if (petsts.length > 0) { %>
+            <% if (petsts?.length > 0) { %>
                 <ul class="cart__item-list">
                     <% petsitters.forEach(p => { %>
                         <li class="cart__item">
                             <h1><%= p.title %></h1>
-                            <h2>Quantity: <%= p.cartItem.quantity %></h2>
+                            <h2>Quantity: <%= p.cartItem.quantity %></h2> 
                             <form action="/cart-delete-item" method="POST">
                                 <input type="hidden" value="<%= p.id %>" name="petsitterId">
                                 <button class="btn danger" type="submit">Delete</button>

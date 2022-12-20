@@ -17,7 +17,7 @@ exports.postAddPetsitter = (req, res, next) => {
     title: title,
     price: price,
     description: description,
-    userId: req.user,
+    userId: req.session.user.id, // req.user
     imageUrl: petsitterImageUrl
   });
   petsitter
@@ -88,7 +88,7 @@ exports.getPetsitters = (req, res, next) => {
   .catch(err => console.log(err));
 };
 
-exports.deletePetsitter = (req, res, next) => {
+exports.postDeletePetsitter = (req, res, next) => {
   const petstId = req.body.petsitterId;
   Petsitter.findByPk(petstId)
     .then(petsitter => {

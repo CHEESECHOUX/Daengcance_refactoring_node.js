@@ -5,25 +5,32 @@ const sequelize = require('../util/database');
 // module.exports = class Booking extends Sequelize.Model {
 //   static init(sequelize) {
 //     return super.init({
-const cart = sequelize.define('cart', {
+const Cart = sequelize.define('cart', {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
-    allowNull: false,
+    allowNull: true,
     primaryKey: true
   },
-  check_in: {
-    type: Sequelize.DATE(),
-    allowNull: false,
+  // item: {
+  //   type: Sequelize.STRING(100),
+  //   allowNull: true,
+  // },
+  quantity: {
+    type: Sequelize.INTEGER,
+    allowNull: true,
   },
-  check_out: {
-    type: Sequelize.DATE(),
-    allowNull: false,
-  },
-  status: {
-    type: Sequelize.STRING(40),
-  },
-  quantity: Sequelize.INTEGER
+  // check_in: {
+  //   type: Sequelize.DATE(),
+  //   allowNull: true,
+  // },
+  // check_out: {
+  //   type: Sequelize.DATE(),
+  //   allowNull: true,
+  // },
+  // status: {
+  //   type: Sequelize.STRING(40),
+  // },
 }, {
   sequelize,
   timestamps: true,
@@ -35,7 +42,7 @@ const cart = sequelize.define('cart', {
   collate: 'utf8_general_ci',
 });
 
-module.exports = cart;
+module.exports = Cart;
 
 //   static associate(db) {
 //     db.Cart.belongsTo(db.User);
