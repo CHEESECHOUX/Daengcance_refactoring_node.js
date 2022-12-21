@@ -4,7 +4,8 @@
   "description": "최지수 노드 첫 프로젝트",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app"
+    "start": "nodemon app",
+    "test": "jest"
   },
   "author": "jisoo",
   "license": "jisoo",
@@ -28,9 +29,11 @@
     "passport-kakao": "^1.0.1",
     "passport-local": "^1.0.0",
     "sequelize": "^6.21.3",
-    "sequelize-cli": "^6.4.1"
+    "sequelize-cli": "^6.4.1",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "jest": "^29.3.1",
     "nodemon": "^2.0.19"
   }
 }

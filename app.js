@@ -15,7 +15,7 @@ const PetsitterPrice = require('./models/petsitter-price');
 const PetsitterType = require('./models/petsitter-type');
 const User = require('./models/user');
 const Cart = require('./models/cart');
-const CartItem = require('./models/cart-item');
+// const CartItem = require('./models/cart-item');
 const Review = require('./models/review');
 const ReviewImage = require('./models/review-image');
 const Type = require('./models/type');
@@ -103,7 +103,7 @@ Petsitter.hasMany(PetsitterImage);
 Petsitter.hasMany(PetsitterPetSize);
 Petsitter.hasMany(PetsitterPrice);
 Petsitter.hasMany(Review);
-Petsitter.belongsToMany(Cart, { through: CartItem });
+// Petsitter.belongsToMany(Cart, { through: CartItem });
 Petsitter.belongsToMany(Type, { through: PetsitterType });
 
 PetsitterImage.belongsTo(Petsitter);
@@ -115,7 +115,7 @@ Review.belongsTo(Petsitter);
 ReviewImage.belongsTo(Review);
 Type.belongsToMany(Petsitter, { through: PetsitterType });
 Cart.belongsTo(User);
-Cart.belongsToMany(Petsitter, { through: CartItem });
+// Cart.belongsToMany(Petsitter, { through: CartItem });
 
 sequelize
   // .sync({ force: true }) // 새로운 코드 db에 적용시키기 (매번 데이터가 사라지니까 주석처리)
